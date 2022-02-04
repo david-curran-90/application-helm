@@ -1,0 +1,39 @@
+{{ .Release.Name }} deployed into {{ .Release.Namespace }} using Application helm.
+
+{{- if not .Values.quiet }}
+View deployment details with
+  helm -n {{ .Release.Namespace }} list {{ .Release.Name }}
+
+You have deployed:
+
+{{ .Values.app.type}} - {{ include "app.name" . }}
+
+{{- if .Values.configmap.enabled }}
+ConfigMap - {{ include "app.name" . }}-cm
+{{- end -}}
+
+{{- if .Values.hpa.enabled }}
+HPA - {{ include "app.name" . }}
+{{- end -}}
+
+{{- if .Values.ingress.enabled }}
+Ingress - {{ include "app.name" . }}
+{{- end -}}
+
+{{- if .Values.service.enabled }}
+Service - {{ include "service.name" . }}
+{{- end -}}
+
+{{- if .Values.app.nodeSelector }}
+Node Selectors:
+{{- include "app.nodeSelector" . | nindent 2}}
+{{- end -}}
+{{- end -}}
+
+{{- if .Values.app.affinity }}
+Affinity rules in place
+{{- end -}}
+
+{{- if .Values.app.priorityClass }}
+Using Priority Class {{ .Values.app.priorityClass }}
+{{- end -}}

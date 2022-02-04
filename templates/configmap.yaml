@@ -1,0 +1,12 @@
+{{- if .Values.configmap.enabled -}}
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ include "app.name" . }}-cm
+  labels:
+    {{- include "configmap.labels" . | nindent 4 }}
+  annotations:
+    {{- include "configmap.annotations" . | nindent 4 }}
+data:
+  {{- include "configmap.data" . | nindent 2 }}
+{{- end -}}

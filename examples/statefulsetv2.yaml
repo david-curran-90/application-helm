@@ -1,0 +1,30 @@
+# application specific settings (deployment, statefulset, daemonset)
+app:
+  type: StatefulSet
+  containerSpec:
+  - name: "sql"
+    image:
+      uri: mysql:latest
+      pullPolicy: "IfNotPresent"
+    env:
+    extraVolumes:
+      mounts:
+      - name: volume
+        mountPath: /mount
+        readOnly: true
+
+# enables persistence, must be true for statefultsets
+persistence:
+  name: "volume"
+  enabled: true
+  storageClass: "db"
+  accessMode: "ReadWriteOnce"
+  size: "10G"
+
+service:
+  enabled: true
+  labels: {}
+  annotations: {}
+  type: "ClusterIP"
+  externalPort: "3306"
+  targetPort: "3306"

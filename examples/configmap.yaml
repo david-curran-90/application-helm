@@ -1,0 +1,22 @@
+configmap:
+  enabled: true
+  labels:
+    resource: configmap
+  annotations:
+    resource: configmap
+  data:
+    key: value
+    data: foo
+
+app:
+  containerSpec:
+  - name: "nginx"
+    image: 
+      uri: nginx
+      pullPolicy: "IfNotPresent"   
+    env: []
+    readinessProbe: {}
+    livenessProbe: {}
+    extraVolumes:
+      mounts: []
+    resources: {}
